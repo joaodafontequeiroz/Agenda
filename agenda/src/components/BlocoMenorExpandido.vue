@@ -5,7 +5,7 @@ export default{
    return{
     adicionar: "+ adicionar tarefa",
     fechar: "fechar",
-    hora:"00:00",
+    hora:"",
    } 
   }
 }
@@ -21,7 +21,7 @@ export default{
           <button class="adicionar" type="button">{{ adicionar }}</button>
           <button class="fechar" type="button">{{ fechar }}</button>
         </div>
-        <input class="hora" type="time"{{ hora }}/>
+        <input class="hora" placeholder="00:00" v-model="hora"/>
       </div>
     </div>
 </template>
@@ -30,8 +30,8 @@ export default{
 
 .hora{
   position: absolute;
-  top: 24px;
-  right: 24px;
+  top: 20px;
+  right: 20px;
   width: fit-content;
   box-sizing: border-box;
   padding: 6px 10px;
@@ -51,22 +51,19 @@ export default{
 }
 
 .pagina{
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: block;
+  min-height: 0;
 }
 
 .bloco-menor-expandido {
   position: relative;
-  width: 400px;
-  height: 290px;
+  width: 100%;
+  height: 240px;
   box-sizing: border-box;
-  padding: 24px;
+  padding: 20px;
   background: #eaf7e4;
   border: 1px solid #cfe5c8;
-  border-radius: 16px;
-
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -76,7 +73,7 @@ export default{
   width: calc(100% - 150px);
   box-sizing: border-box;
   padding: 8px 4px;
-  font-size: 1.5rem;
+  font-size: 1.125rem;
   font-weight: 600;
   text-align: left;
   border: none;
@@ -89,22 +86,22 @@ export default{
   flex: 1;                        
   min-height: 0;
   box-sizing: border-box;
-  padding: 16px 20px;
-  font-size: 1.25rem;
+  padding: 12px 14px;
+  font-size: 1rem;
   font-family: inherit;
   line-height: 1.5;
   background: #fff;
   border: 1px solid #d5dfd2;
-  border-radius: 12px;
+  border-radius: 10px;
   outline: none;
   resize: none;
   overflow-y: auto;
 }
 
 .adicionar{
-  padding: px px;
+  padding: 8px 16px;
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 14px;
   color: #fff;
   background: #4a7c68;
   border: 1px solid #4a7c68;
@@ -114,9 +111,9 @@ export default{
 }
 
 .fechar{
-   padding: 10px 18px;
+  padding: 8px 20px;
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 14px;
   color: #1f2d1f;
   background: #fff;
   border: 1px solid #ddd;
