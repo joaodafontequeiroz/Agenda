@@ -1,17 +1,20 @@
 <script>
+import BlocoMaior from './components/BlocoMaior.vue';
+import BlocoMenor from './components/BlocoMenor.vue';
 import BlocoMenorExpandido from './components/BlocoMenorExpandido.vue';
 
 export default{
   name: "App",
   data(){
     return{
-      titulo: "Titulo",
-      corpo: "Corpo",
+
     }
 
   },
   components:{
         BlocoMenorExpandido,
+        BlocoMenor,
+        BlocoMaior,
   },
 }
 </script>
@@ -19,10 +22,16 @@ export default{
 <template>
 
 <main>
-  <div>
+ 
+  <div class="">
     TESTE OVERLAY
-    <BlocoMenorExpandido></BlocoMenorExpandido>
+    <!-- <BlocoMenorExpandido></BlocoMenorExpandido> -->
   </div>
+ 
+  <div>
+    <!-- <blocoMenor></blocoMenor> -->
+  </div>
+
 </main>
 </template>
 
