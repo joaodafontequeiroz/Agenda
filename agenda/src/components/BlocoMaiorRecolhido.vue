@@ -4,17 +4,42 @@ export default{
         return{
 
         }
+    },
+
+    emits: ['update:opDetalhes'],
+
+    props: {
+      diaN:{
+        type: Number,
+        default: 10
+      },
+
+      diaExtenso:{
+        type: String,
+        default: "Sexta-Feira"
+      },
+
+      mesEano:{
+        type: String,
+        default: "10 de fevereiro"
+      },
+
+      isToday:{
+        type: Boolean,
+        default: true
+      },
     }
+
 }
 </script>
 
 <template>
     <div class="blocoMaiorRecolhido">
-        <div class="dia">dia</div>
-        <div class="titulo">diaNumero</div>
-        <div class="titulo2">data</div>
-        <div class="data">Hoje</div>
-        <div class="expandir">Detalhes</div>
+        <div class="dia">{{diaN}}</div>
+        <div class="titulo">{{ diaExtenso }}</div>
+        <div class="titulo2">{{mesEano}}</div>
+        <div v-if="isToday === true" class="data">Hoje</div>
+        <button @click="$emit('update:opDetalhes', true)" class="expandir">Detalhes</button>
     </div>
 </template>
 

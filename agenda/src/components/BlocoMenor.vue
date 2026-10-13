@@ -3,35 +3,57 @@
 export default{
     data(){
         return{
-            titulo: "titulo",
-            corpo:"corpo",
-            hora: "00:00",
-            concluido: true,
             watchPath: "/watchpic.png",
-            classe: "classe"
         }
-    }
+    },
+
+    props:{
+      concluido:{
+        type: Boolean,
+        default: true,
+      },
+      titulo:{
+        type: String,
+        default: "Titulo",
+      },
+      corpo:{
+        type: String,
+        default: "Digite aqui",
+      },
+      classe:{
+        type: String,
+        default: "classe",
+      },
+
+      hora:{
+        type: String,
+        default: "00:00",
+      },
+
+    },
+
+    emits: ['update:opCheckBox'],
 }
 </script>
 <template>
-    
+
     <div v-if="!concluido" class="blocoMenorPendente">
        <div class="titulo">{{ titulo }}</div>
-        <input class="checkbox" type="checkbox" v-model="concluido">  
-        <img :src="watchPath" alt="imagem de um relogio" class="imgRelogio"></img>
+        <input class="checkbox" type="checkbox" @click="$emit('update:opCheckBox', !concluido)">
+        <img :src="watchPath" alt="imagem de um relogio" class="imgRelogio">
         <div class="corpo">{{ corpo }}</div>
         <div class="classe">{{ classe }}</div>
         <div class="hora">{{ hora }}</div>
     </div>
-    
+
     <div v-else class="blocoMenorConcluido">
         <div class="titulo">{{ titulo }}</div>
-        <input class="checkbox" type="checkbox" v-model="concluido">  
-        <img :src="watchPath" alt="imagem de um relogio" class="imgRelogio"></img>
+        <input class="checkbox" type="checkbox" @click="$emit('update:opCheckBox', !concluido)">
+        <img :src="watchPath" alt="imagem de um relogio" class="imgRelogio">
         <div class="corpo">{{ corpo }}</div>
         <div class="classe">{{ classe }}</div>
         <div class="hora">{{ hora }}</div>
-        
+
     </div>
 </template>
 
