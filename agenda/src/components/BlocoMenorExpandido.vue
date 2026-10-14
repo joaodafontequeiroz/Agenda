@@ -5,21 +5,41 @@ export default{
    return{
     adicionar: "+ adicionar tarefa",
     fechar: "fechar",
-    hora:"",
-   } 
+    titulo: "",
+    corpo: "",
+    hora: "",
+   }
+  },
+
+  emits: ['salva:pagina', 'cancel:task'],
+
+  methods:{
+    sendTask(){
+      const taskPackage = {
+        titulo: this.titulo,
+        corpo: this.corpo,
+        hora: this.hora,
+      }
+
+      this.$emit('salva:pagina', taskPackage);
+
+      this.titulo = "";
+      this.corpo = "";
+      this.hora = "";
+    }
   }
 }
 </script>
 
 <template>
-  
+
     <div class="pagina">
       <div class="bloco-menor-expandido">
-        <input class="input-titulo" placeholder="Titulo">
-        <textarea class="input-corpo" placeholder="digite aqui sua atividade"></textarea>
+        <input class="input-titulo" placeholder="Titulo" v-model="titulo">
+        <textarea class="input-corpo" placeholder="digite aqui sua atividade" v-model="corpo"></textarea>
         <div class="gap">
-          <button class="adicionar" type="button">{{ adicionar }}</button>
-          <button class="fechar" type="button">{{ fechar }}</button>
+          <button class="adicionar" type="button" @click="sendTask">{{ adicionar }}</button>
+          <button class="fechar" type="button" @click="$emit('cancel:task', true)">{{ fechar }}</button>
         </div>
         <input class="hora" placeholder="00:00" v-model="hora"/>
       </div>
@@ -83,7 +103,7 @@ export default{
 
 .input-corpo {
   width: 100%;
-  flex: 1;                        
+  flex: 1;
   min-height: 0;
   box-sizing: border-box;
   padding: 12px 14px;

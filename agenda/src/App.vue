@@ -6,16 +6,33 @@ import BlocoMenorExpandido from './components/BlocoMenorExpandido.vue';
 
 export default{
   name: "App",
-  props(){
 
-  },
   data(){
     return{
-      detalhes: true,
-      adicionarTarefa: true,
+      diaNp: Number,
+      diap: "",
+      mesEanop: "",
+      isTodaypv: "",
+      tarefasconcluidasp: "",
+      porcentagemp: "",
+      tarefaspendentesp: "",
+
+      concluidop: "",
+      titulop: "",
+      corpop: "",
+      classep: "",
+      horap: "",
+
+      opAdicionarTarefa: Boolean,
+      opExibirBlocoMaior: Boolean,
+      taskPackage: null,
     }
+  },
+
+  methods:{
 
   },
+
   components:{
         BlocoMenorExpandido,
         BlocoMenor,
@@ -27,20 +44,10 @@ export default{
 
 <template>
 
-<main>
- 
-  <div class="ConjuntoDosBlocos">
-    <BlocoMaior v-if="detalhes === true" class="blocoMaior">
-       <div><BlocoMenor class="blocoMenor"></BlocoMenor></div> 
-       <BlocoMenorExpandido class="blocoMenorExpandido"></BlocoMenorExpandido> 
-    </BlocoMaior>
-    <div v-else><blocoMaiorRecolhido class="blocoMaiorRecolhido"></BlocoMaiorRecolhido></div>
-  
-    <div></div>  
-  </div>
-
-
-</main>
+  <BlocoMaior v-if="opExibirBlocoMaior" :diaN="diaNp" :dia="diap" :mesEano="mesEanop" :isToday="isTodayp" :tarefasConcluidas="tarefasconcluidasp" :porcentagem="porcentagemp" :tarefasPendentes="tarefaspendentesp" @update:opAdicionarTarefa="opAdicionarTarefa = true" @update:opExibirBlocoMaior="opExibirBlocoMaior=false"></BlocoMaior>
+  <BlocoMaiorRecolhido v-else :diaN="diaNp" :diaExtenso="diap" :mesEano="mesEanop" :isToday="isTodaypv" @update:opDetalhes="opExibirBlocoMaior=true"></BlocoMaiorRecolhido>
+  <BlocoMenorExpandido v-if="opAdicionarTarefa" @salva:pagina="(pacote) => {taskPackage = pacote; opAdicionarTarefa = false}" @cancel:task="opAdicionarTarefa=false"> </BlocoMenorExpandido>
+  <BlocoMenor :concluido="concluidop" :titulo="titulop" :corpo="corpop" :classe="classep" :hora="horap"></BlocoMenor>
 </template>
 
 <style scoped>
@@ -60,7 +67,7 @@ export default{
   border-radius: 16px;
   overflow: hidden;
   font-family: inherit;
-  
+
   display: grid;
   grid-template-columns: 20px auto auto auto 1fr auto 20px;
   grid-template-rows: 20px 26px 18px 34px 6px 20px auto minmax(120px, auto) auto auto 16px;
@@ -108,7 +115,7 @@ export default{
   background: #eaf7e4;
   border: 1px solid #cfe5c8;
   border-radius: 12px;
-  
+
   display: flex;
   flex-direction: column;
   gap: 12px;
