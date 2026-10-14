@@ -9,52 +9,27 @@ export default{
 
   data(){
     return{
-      diaNp: Number,
-      diap: "",
-      mesEanop: "",
-      isTodaypv: "",
-      tarefasconcluidasp: "",
-      porcentagemp: "",
-      tarefaspendentesp: "",
+      diaNp: 8,
+      diap: "sexta-feira",
+      mesEanop: "sexta-feira 10 de outubro",
+      isTodaypv: true,
+      tarefasconcluidasp: "2",
+      porcentagemp: "50",
+      tarefaspendentesp: "4",
 
       concluidop: "",
-      titulop: "",
-      corpop: "",
-      classep: "",
-      horap: "",
+      titulop: "taarede",
+      corpop: "oioioi",
+      classep: "casa",
+      horap: "10:00",
 
       opAdicionarTarefa: Boolean,
-      opBlocoMenorExpandido:{
-        type: Boolean,
-        default: false,
-      },
+      opBlocoMenorExpandido: false,
       opExibirBlocoMaior: Boolean,
       opBlocoMenor: Boolean,
 
 
-      listaTarefas: [
-  {
-    concluido: false,
-    titulo: "Academia",
-    corpo: "Treino de pernas e cardio",
-    classe: "Saúde",
-    hora: "07:00"
-  },
-  {
-    concluido: true,
-    titulo: "Reunião Diária",
-    corpo: "Alinhamento sobre a nova API",
-    classe: "Trabalho",
-    hora: "09:30"
-  },
-  {
-    concluido: false,
-    titulo: "Estudar Vue.js",
-    corpo: "Revisar diretivas e componentes",
-    classe: "Estudo",
-    hora: "20:00"
-  }
-],
+      listaTarefas: [],
     }
   },
 
@@ -73,14 +48,8 @@ export default{
 
 <template>
 
-  <BlocoMaior v-if="opExibirBlocoMaior" :diaN="diaNp" :dia="diap" :mesEano="mesEanop" :isToday="isTodayp" :tarefasConcluidas="tarefasconcluidasp" :porcentagem="porcentagemp" :tarefasPendentes="tarefaspendentesp" @update:opAdicionarTarefa="opBlocoMenorExpandido = true" @update:opExibirBlocoMaior="opExibirBlocoMaior=false; opBlocoMenor = false" >
-    <BlocoMenor v-show="opBlocoMenor" @update:opCheckBox="(op) => {this.listaTarefas.concluido.push(op)}" v-for="(tarefas, index) in listaTarefas"
-      :key = "index"
-      :concluido="tarefas.concluido"
-      :titulo="tarefas.titulo"
-      :corpo="tarefas.corpo"
-      :classe="tarefas.classe"
-      :hora="tarefas.hora"></BlocoMenor>
+  <BlocoMaior v-if="opExibirBlocoMaior" :diaN="diaNp" :dia="diap" :mesEano="mesEanop" :isToday="isTodaypv" :tarefasConcluidas="tarefasconcluidasp" :porcentagem="porcentagemp" :tarefasPendentes="tarefaspendentesp" @update:opAdicionarTarefa="opBlocoMenorExpandido = true" @update:opExibirBlocoMaior="opExibirBlocoMaior=false; opBlocoMenor = false" >
+      <BlocoMenor v-show="opBlocoMenor" :listaTarefas="listaTarefas"></BlocoMenor>
       <BlocoMenorExpandido v-if="opBlocoMenorExpandido" @salva:pagina="(pacote) => {this.listaTarefas.push(pacote); opBlocoMenorExpandido = false; opAdicionarTarefa = true}" @cancel:task="opBlocoMenorExpandido=false"> </BlocoMenorExpandido>
   </BlocoMaior>
   <BlocoMaiorRecolhido v-else :diaN="diaNp" :diaExtenso="diap" :mesEano="mesEanop" :isToday="isTodaypv" @update:opDetalhes="opExibirBlocoMaior=true; opBlocoMenor = true"></BlocoMaiorRecolhido>

@@ -17,10 +17,12 @@ export default{
   methods:{
     sendTask(){
       const taskPackage = {
+        id: crypto.randomUUID(),
         titulo: this.titulo,
         corpo: this.corpo,
         hora: this.hora,
         classe: this.classe,
+        concluido: false,
       }
 
       this.$emit('salva:pagina', taskPackage);
