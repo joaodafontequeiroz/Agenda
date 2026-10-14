@@ -4,7 +4,6 @@ export default{
         return{
             adicionarTarefa: "+ Adicionar tarefa",
             fechar: "Fechar",
-            contTarefas: "1",
         }
     },
 
@@ -39,7 +38,7 @@ export default{
       } ,
     },
 
-    emits: ['update:opAdicionarTarefa, update:opExibirBlocoMaior'],
+    emits: ['update:opAdicionarTarefa', 'update:opExibirBlocoMaior'],
 }
 </script>
 
@@ -47,14 +46,14 @@ export default{
     <div class="blocoMaior">
         <div class="lista"> <slot></slot>
         </div>
-        <div class="dia" :value="dia">{{ dia }}</div>
-        <div class="mesEano" :value="mesEano">{{mesEano}}</div>
+        <div class="dia">{{ dia }}</div>
+        <div class="mesEano">{{mesEano}}</div>
         <button style="button" class="adicionarTarefa" @click="$emit('update:opAdicionarTarefa', true)">{{adicionarTarefa}}</button>
         <button style="button" class="fechar" @click="$emit('update:opExibirBlocoMaior', false)">{{fechar}}</button>
-        <div class="isToday" :value="isToday">{{isToday}}</div>
-        <div class="Ndia" value="diaN">{{ diaN }}</div>
+        <div class="isToday" v-if="isToday === true" >Hoje</div>
+        <div class="Ndia">{{ diaN }}</div>
         <div class="tarefas">tarefas a fazer</div>
-        <div class="porcentagem" :value="porcentagem">{{porcentagem}}</div>
+        <div class="porcentagem">{{porcentagem}}%</div>
         <div class="barra" :style="{'--progresso': porcentagem + '%'}"></div>
         <div class="tituloBarra">tarefas concluidas: {{tarefasConcluidas}} de {{tarefasPendentes}}</div>
         <div class="pendente">{{tarefasPendentes}} tarefa pendente</div>
