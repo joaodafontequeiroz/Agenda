@@ -45,8 +45,7 @@ export default{
 
 <template>
     <div class="blocoMaior">
-        <div class="lista">
-            <slot></slot>
+        <div class="lista"> <slot></slot>
         </div>
         <div class="dia" :value="dia">{{ dia }}</div>
         <div class="mesEano" :value="mesEano">{{mesEano}}</div>

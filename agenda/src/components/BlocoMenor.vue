@@ -10,7 +10,7 @@ export default{
     props:{
       concluido:{
         type: Boolean,
-        default: true,
+        default: false,
       },
       titulo:{
         type: String,
@@ -39,7 +39,7 @@ export default{
 
     <div v-if="!concluido" class="blocoMenorPendente">
        <div class="titulo">{{ titulo }}</div>
-        <input class="checkbox" type="checkbox" @click="$emit('update:opCheckBox', !concluido)">
+        <input class="checkbox" type="checkbox" :checked="concluido" @click="$emit('update:opCheckBox', !concluido)">
         <img :src="watchPath" alt="imagem de um relogio" class="imgRelogio">
         <div class="corpo">{{ corpo }}</div>
         <div class="classe">{{ classe }}</div>
