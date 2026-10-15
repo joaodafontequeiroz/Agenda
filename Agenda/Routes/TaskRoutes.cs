@@ -2,9 +2,9 @@ using Humanizer;
 namespace Routes.TaskRoute;
 using System.Globalization;
 using Microsoft.EntityFrameworkCore;
-using Esqueci.TaskRequest;
+using Request.TaskRequest;
 using Data.ContextTask;
-using Modules.Task;
+using Models.Task;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
@@ -19,11 +19,9 @@ public static class TaskRoute
         group.MapPost("/", async ([FromServices] TaskContext context, [FromBody]TaskRequest req)
         =>
         {
-            
             Task t = new Task(req.Hora, req.Classe, req.Titulo, req.Corpo, req.Concluido);
             await context.Tasks.AddAsync(t);
             await context.SaveChangesAsync();
-
         }).WithTags("Task Routes");
 
         //pegando e listando todas as tasks

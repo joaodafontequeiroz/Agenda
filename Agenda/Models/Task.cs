@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace Modules.Task;
+namespace Models.Task;
 
 public class Task
 {

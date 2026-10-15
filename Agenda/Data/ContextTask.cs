@@ -1,6 +1,6 @@
 namespace Data.ContextTask;
 using Microsoft.EntityFrameworkCore;
-using Modules.Task;
+using Models.Task;
 
  public class TaskContext : DbContext
 {
