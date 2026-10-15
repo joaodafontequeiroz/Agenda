@@ -9,8 +9,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<TaskContext>(options => options.UseSqlite("Data Source=agenda.db"));
-
+builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("agendaApi",
+            builder => builder
+            .WithOrigins("http://localhost:5175")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
+    });
 var app = builder.Build();
+
+app.UseCors("agendaApi");
 
 if (app.Environment.IsDevelopment())
 {
