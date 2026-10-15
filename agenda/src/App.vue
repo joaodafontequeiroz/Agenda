@@ -3,25 +3,31 @@ import BlocoMaior from './components/BlocoMaior.vue';
 import BlocoMaiorRecolhido from './components/BlocoMaiorRecolhido.vue';
 import BlocoMenor from './components/BlocoMenor.vue';
 import BlocoMenorExpandido from './components/BlocoMenorExpandido.vue';
+import axios from "axios";
+axios.get('/Routes/TaskRoutes/todas')
+.then((response) => {
+    console.log(response.data)
+})
+
 
 export default{
   name: "App",
 
   data(){
     return{
-      diaNp: 8,
-      diap: "sexta-feira",
-      mesEanop: "sexta-feira 10 de outubro",
+      diaNp: "",
+      diap: "",
+      mesEanop: "",
       isTodaypv: true,
-      tarefasconcluidasp: "2",
-      porcentagemp: "50",
-      tarefaspendentesp: "4",
+      tarefasconcluidasp: "",
+      porcentagemp: "",
+      tarefaspendentesp: "",
 
       concluidop: "",
-      titulop: "taarede",
-      corpop: "oioioi",
-      classep: "casa",
-      horap: "10:00",
+      titulop: "",
+      corpop: "",
+      classep: "",
+      horap: "",
 
       opAdicionarTarefa: Boolean,
       opBlocoMenorExpandido: false,

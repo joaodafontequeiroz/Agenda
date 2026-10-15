@@ -1,4 +1,5 @@
 <script>
+import tarefasServicos from '@/tarefasServicos';
 export default{
     data(){
         return{
@@ -36,6 +37,11 @@ export default{
         type: Number,
         default: 1,
       } ,
+    },
+
+    async mounted(){
+      let o =  await tarefasServicos.obter();
+      console.log(o.data);
     },
 
     emits: ['update:opAdicionarTarefa', 'update:opExibirBlocoMaior'],
