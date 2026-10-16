@@ -1,5 +1,5 @@
 <script>
-
+import tarefasServicos from '@/tarefasServicos';
 export default{
     data(){
         return{
@@ -8,14 +8,19 @@ export default{
     },
 
     methods:{
-        apagarTask(id) {
-          const i = this.listaTarefas.findIndex(t => t.id === id);
-          if (i !== -1) {
-           this.listaTarefas.splice(i, 1);
-          }
+        async apagarTask(id) {
+        await tarefasServicos.deletarTaskPorId(id);
+        this.$emit('update:opCheckBox');
+        console.log("apagado");
         },
-    },
 
+        async update(tarefa){
+          tarefa.concluido = !tarefa.concluido;
+          await tarefasServicos.atualizarConcluido(tarefa.id, tarefa);
+          this.$emit('update:opCheckBox');
+          console.log("atualizado");
+        }
+    },
 
     props:{
       listaTarefas: Array,
@@ -30,7 +35,7 @@ export default{
     <div v-for="tarefas in listaTarefas" :key="tarefas.id">
       <div v-if="!tarefas.concluido" class="blocoMenorPendente">
         <div class="titulo">{{ tarefas.titulo }}</div>
-        <input class="checkbox" type="checkbox" :checked="tarefas.concluido" @click="tarefas.concluido = !tarefas.concluido">
+        <input class="checkbox" type="checkbox" :checked="tarefas.concluido" @click="update(tarefas)">
         <img class="excluir" src="/fechar.png" alt="imagem de um icone de fechar" @click="apagarTask(tarefas.id)">
         <img :src="watchPath" alt="imagem de um relogio" class="imgRelogio">
         <div class="corpo">{{tarefas.corpo}}</div>
@@ -44,7 +49,7 @@ export default{
     <div v-for="tarefas in listaTarefas" :key="tarefas.id">
     <div v-if="tarefas.concluido" class="blocoMenorConcluido">
         <div class="titulo">{{ tarefas.titulo }}</div>
-        <input class="checkbox" type="checkbox" :checked="tarefas.concluido" @click="tarefas.concluido = !tarefas.concluido">
+        <input class="checkbox" type="checkbox" :checked="tarefas.concluido" @click="update(tarefas)">
         <img class="excluir" src="/fechar.png" alt="imagem de um icone de fechar" @click="apagarTask(tarefas.id)">
         <img :src="watchPath" alt="imagem de um relogio" class="imgRelogio">
         <div class="corpo">{{tarefas.corpo}}</div>

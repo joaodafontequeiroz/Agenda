@@ -8,34 +8,16 @@ export default{
     },
 
     props: {
-      diaN:{
-        type: Number,
-        default: 10
-      },
-      dia:{
-        type: String,
-        default: "Sexta-Feira",
-      },
-      mesEano:{
-        type: String,
-        default: "fevereiro de 2006",
-      },
-      isToday: {
-        type: Boolean,
-        default: true,
-      },
-      tarefasConcluidas:{
-        type: Number,
-        default: 2,
-      },
-      porcentagem: {
-        type: Number,
-        default: 67
-      },
-      tarefasPendentes: {
-        type: Number,
-        default: 1,
-      } ,
+      diaN: 0,
+      dia: "",
+      mesEano: "",
+      isToday: false,
+      tarefasConcluidas: 0,
+      porcentagem: 0,
+      tarefasPendentes: 0,
+    },
+
+    method:{
     },
 
     emits: ['update:opAdicionarTarefa', 'update:opExibirBlocoMaior'],
@@ -55,7 +37,7 @@ export default{
         <div class="tarefas">tarefas a fazer</div>
         <div class="porcentagem">{{porcentagem}}%</div>
         <div class="barra" :style="{'--progresso': porcentagem + '%'}"></div>
-        <div class="tituloBarra">tarefas concluidas: {{tarefasConcluidas}} de {{tarefasPendentes}}</div>
+        <div class="tituloBarra">tarefas concluidas: {{tarefasConcluidas}} de {{ tarefasConcluidas + tarefasPendentes}}</div>
         <div class="pendente">{{tarefasPendentes}} tarefa pendente</div>
     </div>
 </template>
