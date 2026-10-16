@@ -13,7 +13,7 @@ builder.Services.AddCors(options =>
     {
         options.AddPolicy("agendaApi",
             builder => builder
-            .WithOrigins("http://localhost:5175")
+            .WithOrigins("http://localhost:5173")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials());

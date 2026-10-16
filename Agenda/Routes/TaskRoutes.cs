@@ -8,6 +8,7 @@ using Models.Task;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
+using SQLitePCL;
 
 public static class TaskRoute
 {
@@ -19,7 +20,9 @@ public static class TaskRoute
         group.MapPost("/", async ([FromServices] TaskContext context, [FromBody]TaskRequest req)
         =>
         {
+
             Task t = new Task(req.Hora, req.Classe, req.Titulo, req.Corpo, req.Concluido);
+            
             await context.Tasks.AddAsync(t);
             await context.SaveChangesAsync();
         }).WithTags("Task Routes");
@@ -30,7 +33,7 @@ public static class TaskRoute
             return Results.Ok(await context.Tasks.ToListAsync());
         }).WithTags("Task Routes");
         //deletando uma task por ID (acao quando clicam no xzinho no front)
-        group.MapDelete("/{id}", async (Guid Id, [FromServices] TaskContext context) =>
+        group.MapDelete("/{id:Guid}", async (Guid Id, [FromServices] TaskContext context) =>
         {
             var id = await context.Tasks.Where(t => t.Id == Id).ExecuteDeleteAsync();
         }).WithTags("Task Routes");
@@ -52,10 +55,26 @@ public static class TaskRoute
         //retorna a porcentagem de concluidas em relacao ao total de tasks
         group.MapGet ("/porcent" , async([FromServices]TaskContext context) =>
         {
-            int total = await context.Tasks.CountAsync();
-            int QtdConcluidas = await context.Tasks.CountAsync(t => t.Concluido == true);
-            double porcentagem = ((100) * (QtdConcluidas)) / (total);
+            var total = await context.Tasks.CountAsync();
+            if(total == 0) return Results.Ok(0);
+            var QtdConcluidas = await context.Tasks.CountAsync(t => t.Concluido == true);
+            var porcentagem = ((100) * (QtdConcluidas)) / (total);
             return Results.Ok(porcentagem);
+            
+        }).WithTags("Task Routes");
+
+       group.MapPatch("/{id:guid}", async (Guid id, [FromBody] TaskRequest req, [FromServices] TaskContext context) =>
+{
+            var linhas = await context.Tasks
+                .Where(t => t.Id == id)
+                .ExecuteUpdateAsync(s => s
+                    .SetProperty(t => t.Hora, req.Hora)
+                    .SetProperty(t => t.Classe, req.Classe)
+                    .SetProperty(t => t.Titulo, req.Titulo)
+                    .SetProperty(t => t.Corpo, req.Corpo)
+                    .SetProperty(t => t.Concluido, req.Concluido));
+
+            return linhas > 0 ? Results.NoContent() : Results.NotFound();
         }).WithTags("Task Routes");
 
         //Dia em numero
