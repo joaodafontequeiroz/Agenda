@@ -1,5 +1,5 @@
 <script>
-
+import tarefasServicos from '@/tarefasServicos';
 export default{
   data(){
    return{
@@ -15,23 +15,25 @@ export default{
   emits: ['salva:pagina', 'cancel:task'],
 
   methods:{
-    sendTask(){
+    async sendTask(){
       const taskPackage = {
-        id: crypto.randomUUID(),
-        titulo: this.titulo,
-        corpo: this.corpo,
         hora: this.hora,
         classe: this.classe,
+        titulo: this.titulo,
+        corpo: this.corpo,
         concluido: false,
       }
-
-      this.$emit('salva:pagina', taskPackage);
+      await tarefasServicos.enviandoDadosTasks(taskPackage);
+      this.$emit('salva:pagina');
 
       this.titulo = "";
       this.corpo = "";
       this.hora = "";
       this.classe = "";
     }
+  },
+  async mounted(){
+    await tarefasServicos.enviandoDadosTasks();
   }
 }
 </script>

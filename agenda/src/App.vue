@@ -3,25 +3,20 @@ import BlocoMaior from './components/BlocoMaior.vue';
 import BlocoMaiorRecolhido from './components/BlocoMaiorRecolhido.vue';
 import BlocoMenor from './components/BlocoMenor.vue';
 import BlocoMenorExpandido from './components/BlocoMenorExpandido.vue';
-import axios from "axios";
-axios.get('/Routes/TaskRoutes/todas')
-.then((response) => {
-    console.log(response.data)
-})
-
+import tarefasServicos from '@/tarefasServicos';
 
 export default{
   name: "App",
 
   data(){
     return{
-      diaNp: "",
+      diaNp: 0,
       diap: "",
       mesEanop: "",
       isTodaypv: true,
-      tarefasconcluidasp: "",
-      porcentagemp: "",
-      tarefaspendentesp: "",
+      tarefasconcluidasp: 0,
+      porcentagemp: 0,
+      tarefaspendentesp: 0,
 
       concluidop: "",
       titulop: "",
@@ -29,18 +24,48 @@ export default{
       classep: "",
       horap: "",
 
-      opAdicionarTarefa: Boolean,
+      opAdicionarTarefa: false,
       opBlocoMenorExpandido: false,
-      opExibirBlocoMaior: Boolean,
-      opBlocoMenor: Boolean,
+      opExibirBlocoMaior: false,
+      opBlocoMenor: false,
 
 
       listaTarefas: [],
     }
   },
 
-  methods:{
+  async mounted(){
 
+    //tasks + blocoMenorExpandido
+      this.listaTarefas = (await tarefasServicos.obterTasks()).data;
+      console.log(this.listaTarefas)
+      this.tarefasconcluidasp =  (await tarefasServicos.obterTasksConcluidas()).data;
+      this.tarefaspendentesp =  (await tarefasServicos.obterTasksPendentes()).data;
+      this.porcentagemp =  (await tarefasServicos.obterPorcentTasks()).data;
+
+    //date
+      this.diaNp =  (await tarefasServicos.obterDiaNumero()).data;
+      this.diap =  (await tarefasServicos.obterDiaExtenso()).data;
+      this.mesEanop =  (await tarefasServicos.obterMesEAno()).data;
+      this.isTodaypv =  (await tarefasServicos.obterEhoje()).data;
+    },
+
+  methods:{
+    async atualizar(){
+      this.opBlocoMenorExpandido = false;
+      this.opAdicionarTarefa = true
+      this.listaTarefas = (await tarefasServicos.obterTasks()).data;
+      this.tarefasconcluidasp =  (await tarefasServicos.obterTasksConcluidas()).data;
+      this.tarefaspendentesp =  (await tarefasServicos.obterTasksPendentes()).data;
+      this.porcentagemp =  (await tarefasServicos.obterPorcentTasks()).data;
+
+    //date
+      this.diaNp =  (await tarefasServicos.obterDiaNumero()).data;
+      this.diap =  (await tarefasServicos.obterDiaExtenso()).data;
+      this.mesEanop =  (await tarefasServicos.obterMesEAno()).data;
+      this.isTodaypv =  (await tarefasServicos.obterEhoje()).data;
+
+    }
   },
 
   components:{
@@ -55,8 +80,8 @@ export default{
 <template>
 
   <BlocoMaior v-if="opExibirBlocoMaior" :diaN="diaNp" :dia="diap" :mesEano="mesEanop" :isToday="isTodaypv" :tarefasConcluidas="tarefasconcluidasp" :porcentagem="porcentagemp" :tarefasPendentes="tarefaspendentesp" @update:opAdicionarTarefa="opBlocoMenorExpandido = true" @update:opExibirBlocoMaior="opExibirBlocoMaior=false; opBlocoMenor = false" >
-      <BlocoMenor v-show="opBlocoMenor" :listaTarefas="listaTarefas"></BlocoMenor>
-      <BlocoMenorExpandido v-if="opBlocoMenorExpandido" @salva:pagina="(pacote) => {this.listaTarefas.push(pacote); opBlocoMenorExpandido = false; opAdicionarTarefa = true}" @cancel:task="opBlocoMenorExpandido=false"> </BlocoMenorExpandido>
+      <BlocoMenor v-show="opBlocoMenor" :listaTarefas="listaTarefas" @update:opCheckBox="atualizar()"></BlocoMenor>
+      <BlocoMenorExpandido v-if="opBlocoMenorExpandido" @salva:pagina="atualizar()" @cancel:task="opBlocoMenorExpandido=false"> </BlocoMenorExpandido>
   </BlocoMaior>
   <BlocoMaiorRecolhido v-else :diaN="diaNp" :diaExtenso="diap" :mesEano="mesEanop" :isToday="isTodaypv" @update:opDetalhes="opExibirBlocoMaior=true; opBlocoMenor = true"></BlocoMaiorRecolhido>
 

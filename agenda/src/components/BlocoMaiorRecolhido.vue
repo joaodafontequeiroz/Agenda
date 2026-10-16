@@ -2,6 +2,7 @@
 export default{
     data(){
         return{
+          
 
         }
     },
@@ -9,25 +10,13 @@ export default{
     emits: ['update:opDetalhes'],
 
     props: {
-      diaN:{
-        type: Number,
-        default: 10
-      },
+      diaN: 0,
 
-      diaExtenso:{
-        type: String,
-        default: "Sexta-Feira"
-      },
+      diaExtenso: "",
 
-      mesEano:{
-        type: String,
-        default: "10 de fevereiro"
-      },
+      mesEano: "",
 
-      isToday:{
-        type: Boolean,
-        default: true
-      },
+      isToday: true,
     }
 
 }
