@@ -24,7 +24,8 @@ export default{
         concluido: false,
       }
       await tarefasServicos.enviandoDadosTasks(taskPackage);
-      this.$emit('salva:pagina');
+
+      if () this.$emit('salva:pagina');
 
       this.titulo = "";
       this.corpo = "";

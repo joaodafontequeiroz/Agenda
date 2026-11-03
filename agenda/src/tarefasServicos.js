@@ -23,7 +23,12 @@ export default{
 
   async enviandoDadosTasks(tarefaParaAdicionar){
 
-    return await axios.post("/Controller/Command", tarefaParaAdicionar);
+    try {
+      return await axios.post("/Controller/Command", tarefaParaAdicionar);
+    }
+    catch(error){
+      if(error.response) console.log(error.response.data.mensagem)
+    }
   },
 
   async deletarTaskPorId(id){
