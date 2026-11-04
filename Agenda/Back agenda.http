@@ -1,0 +1,6 @@
+@Back_agenda_HostAddress = http://localhost:5190
+
+GET {{Back_agenda_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
