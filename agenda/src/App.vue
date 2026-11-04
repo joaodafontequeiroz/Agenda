@@ -28,7 +28,9 @@ export default{
       opBlocoMenorExpandido: false,
       opExibirBlocoMaior: false,
       opBlocoMenor: false,
-
+      opBlocoErro: false,
+      opCssFormatoHoraErrada: false,
+      opCssClasseNaoSelecionada: false,
 
       listaTarefas: [],
     }
@@ -65,6 +67,11 @@ export default{
       this.mesEanop =  (await tarefasServicos.obterMesEAno()).data;
       this.isTodaypv =  (await tarefasServicos.obterEhoje()).data;
 
+    },
+
+    FormatoHoraErrado(){
+      this.opBlocoErro = true;
+      this.op
     }
   },
 
@@ -81,10 +88,10 @@ export default{
 
   <BlocoMaior v-if="opExibirBlocoMaior" :diaN="diaNp" :dia="diap" :mesEano="mesEanop" :isToday="isTodaypv" :tarefasConcluidas="tarefasconcluidasp" :porcentagem="porcentagemp" :tarefasPendentes="tarefaspendentesp" @update:opAdicionarTarefa="opBlocoMenorExpandido = true" @update:opExibirBlocoMaior="opExibirBlocoMaior=false; opBlocoMenor = false" >
       <BlocoMenor v-show="opBlocoMenor" :listaTarefas="listaTarefas" @update:opCheckBox="atualizar()"></BlocoMenor>
-      <BlocoMenorExpandido v-if="opBlocoMenorExpandido" @salva:pagina="atualizar()" @cancel:task="opBlocoMenorExpandido=false"> </BlocoMenorExpandido>
+      <BlocoMenorExpandido v-if="opBlocoMenorExpandido" @salva:pagina="atualizar()" @cancel:task="opBlocoMenorExpandido=false" @dado:invalido="FormatoHoraErrado()">  </BlocoMenorExpandido>
   </BlocoMaior>
   <BlocoMaiorRecolhido v-else :diaN="diaNp" :diaExtenso="diap" :mesEano="mesEanop" :isToday="isTodaypv" @update:opDetalhes="opExibirBlocoMaior=true; opBlocoMenor = true"></BlocoMaiorRecolhido>
-
+  <BlocoErro v-if="opBlocoErro" :opCssFormatoHoraErrada="opHoraFormatoErrado" :opCssClasseNaoSelecionada="opClasseNaoSelecionada"></BlocoErro>
 
 </template>
 

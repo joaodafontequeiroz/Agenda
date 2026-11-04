@@ -12,7 +12,7 @@ export default{
    }
   },
 
-  emits: ['salva:pagina', 'cancel:task'],
+  emits: ['salva:pagina', 'cancel:task', 'dado:invalido'],
 
   methods:{
     async sendTask(){
@@ -23,9 +23,10 @@ export default{
         corpo: this.corpo,
         concluido: false,
       }
-      await tarefasServicos.enviandoDadosTasks(taskPackage);
+      let DeuCerto = await tarefasServicos.enviandoDadosTasks(taskPackage);
 
-      if () this.$emit('salva:pagina');
+      if (DeuCerto == false) return this.$emit('dado:invalido');
+      this.$emit('salva:pagina');
 
       this.titulo = "";
       this.corpo = "";
@@ -46,7 +47,7 @@ export default{
         <input class="input-titulo" placeholder="Titulo" v-model="titulo">
         <textarea class="input-corpo" placeholder="digite aqui sua atividade" v-model="corpo"></textarea>
         <div class="gap">
-          <button class="adicionar" type="button" @click="sendTask">{{ adicionar }}</button>
+          <button class="adicionar" type="button" @click="sendTask()">{{ adicionar }}</button>
           <button class="fechar" type="button" @click="$emit('cancel:task', true)">{{ fechar }}</button>
           <select class="classe" v-model="classe">
           <option value="" disabled >Selecione o tipo</option>
