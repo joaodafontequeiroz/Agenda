@@ -12,7 +12,7 @@ export default{
    }
   },
 
-  emits: ['salva:pagina', 'cancel:task', 'dado:invalido'],
+  emits: ['salva:pagina', 'cancel:task', 'mostrar:mensagemRetornoTarefasEnviadas'],
 
   methods:{
     async sendTask(){
@@ -23,9 +23,8 @@ export default{
         corpo: this.corpo,
         concluido: false,
       }
-      let DeuCerto = await tarefasServicos.enviandoDadosTasks(taskPackage);
-
-      if (DeuCerto == false) return this.$emit('dado:invalido');
+      await tarefasServicos.enviandoDadosTasks(taskPackage);
+      this.$emit('mostrar:mensagemRetornoTarefasEnviadas');
       this.$emit('salva:pagina');
 
       this.titulo = "";
@@ -35,7 +34,6 @@ export default{
     }
   },
   async mounted(){
-    await tarefasServicos.enviandoDadosTasks();
   }
 }
 </script>

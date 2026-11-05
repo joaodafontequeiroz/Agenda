@@ -8,13 +8,13 @@ export default{
     },
 
     props: {
-      diaN: 0,
-      dia: "",
-      mesEano: "",
-      isToday: false,
-      tarefasConcluidas: 0,
-      porcentagem: 0,
-      tarefasPendentes: 0,
+      diaN: Number,
+      dia: String,
+      mesEano: String,
+      isToday: Boolean,
+      tarefasConcluidas: Number,
+      porcentagem: Number,
+      tarefasPendentes: Number,
     },
 
     method:{

@@ -2,7 +2,7 @@
 export default{
     data(){
         return{
-          
+
 
         }
     },
@@ -10,13 +10,13 @@ export default{
     emits: ['update:opDetalhes'],
 
     props: {
-      diaN: 0,
+      diaN: Number,
 
-      diaExtenso: "",
+      diaExtenso: String,
 
-      mesEano: "",
+      mesEano: String,
 
-      isToday: true,
+      isToday: Boolean,
     }
 
 }

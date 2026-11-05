@@ -2,60 +2,147 @@ import axios from "axios";
 
 export default{
   async obterTasks(){
-
-    return await axios.get("http://localhost:5190/Controller/Queries/listar");
+    try{
+      let response = await axios.get("http://localhost:5190/Controller/Queries/listar");
+      console.log(response);
+      return await response.data;
+    }
+    catch(error){
+      if(error.response){
+        let response = await axios.get("http://localhost:5190/Controller/Queries/listar");
+        console.log(response.data.mensagem);
+      };
+    }
   },
 
   async obterTasksConcluidas(){
 
-    return await axios.get("/Controller/Queries/concluidas");
+    try{
+      let response = await axios.get("/Controller/Queries/concluidas");
+      console.log(response.data.mensagem);
+      return await response.data;
+    }
+    catch{
+      let response = await axios.get("/Controller/Queries/concluidas");
+      console.log(response.data.mensagem);
+    }
   },
 
   async obterTasksPendentes(){
+    try{
+      let response = await axios.get("/Controller/Queries/pendentes");
+      console.log(response.data.mensagem);
+      return await response.data;
+    }
+    catch{
+      let response = await axios.get("/Controller/Queries/pendentes");
+      console.log(response.data.mensagem);
+    }
 
-    return await axios.get("/Controller/Queries/pendentes");
   },
 
   async obterPorcentTasks(){
 
-    return await axios.get("/Controller/Queries/porcent");
+     try{
+      let response = await axios.get("/Controller/Queries/porcent");;
+      console.log(response.data.mensagem);
+      return await response.data;
+    }
+    catch{
+      let response = await axios.get("/Controller/Queries/porcent");;
+      console.log(response.data.mensagem);
+    }
   },
 
   async enviandoDadosTasks(tarefaParaAdicionar){
 
-    try {
-      return await axios.post("/Controller/Command", tarefaParaAdicionar);
+    try{
+      let response = await axios.post("/Controller/Command", tarefaParaAdicionar);
+      console.log(response.data.mensagem);
+      return response;
     }
     catch(error){
-      if(error.response) return await false;
+      if(error.response){
+        let response = await axios.post("/Controller/Command", tarefaParaAdicionar);
+        console.log(response.data.mensagem);
+      };
+
     }
   },
 
   async deletarTaskPorId(id){
-    return await axios.delete(`/Controller/Command/${id}`);
+      try{
+      let response = await axios.delete(`/Controller/Command/${id}`);
+      console.log(response.data.mensagem);
+      return await response.data;
+    }
+    catch{
+      let response = await axios.delete(`/Controller/Command/${id}`);
+      console.log(response.data.mensagem);
+    }
+    ;
   },
 
   async atualizarConcluido(id, concluido) {
-    return await axios.patch(`/Controller/Command/${id}`, concluido, {
-      headers: { 'Content-Type': 'application/json' }
-    });
+    try{
+      let response = await axios.patch(`/Controller/Command/${id}`, concluido);
+      console.log(response);
+      return response.data;
+    }
+
+    catch{
+      let response = await axios.patch(`/Controller/Command/${id}`, concluido);
+      console.log(response.data.mensagem);
+    }
   },
 
   //verbos date
   async obterDiaNumero(){
-    return await axios.get("/Controller/Queries/diaNumero");
+    try{
+      let response = await axios.get("/Controller/Queries/diaNumero");
+      console.log(response.data.mensagem);
+      return await response.data;
+    }
+    catch{
+      let response = await axios.get("/Controller/Queries/diaNumero");
+      console.log(response.data.mensagem);
+    }
   },
 
   async obterDiaExtenso(){
-    return await axios.get("/Controller/Queries/diaExtenso");
+
+    try{
+      let response = await axios.get("/Controller/Queries/diaExtenso");
+      console.log(response.data.mensagem);
+      return await response.data;    }
+    catch{
+      let response = await axios.get("/Controller/Queries/diaExtenso");
+      console.log(response.data.mensagem);
+    }
   },
 
   async obterMesEAno(){
-    return await axios.get("/Controller/Queries/mesEano");
+    try{
+      let response = await axios.get("/Controller/Queries/mesEano");
+      console.log(response.data.mensagem);
+      return await response.data;
+    }
+    catch{
+      let response = await axios.get("/Controller/Queries/mesEano");
+      console.log(response.data.mensagem);
+    }
   },
 
   async obterEhoje(){
-    return await axios.get("/Controller/Queries/Ehoje​");
+    try{
+      let response = await axios.get("/Controller/Queries/Ehoje");
+      console.log(response.data.mensagem);
+      return await response.data;
+    }
+    catch{
+      let response = await axios.get("/Controller/Queries/Ehoje​");
+      console.log(response.data.mensagem);
+    }
   },
 }
 
