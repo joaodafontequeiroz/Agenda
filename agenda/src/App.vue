@@ -181,7 +181,7 @@ export default{
       <BlocoMenorExpandido v-if="opBlocoMenorExpandido" @mostrar:mensagemRetornoTarefasEnviadas="MensagemRetornoTarefasEnviadas" @salva:pagina="atualizar()" @cancel:task="opBlocoMenorExpandido=false">  </BlocoMenorExpandido>
   </BlocoMaior>
   <BlocoMaiorRecolhido v-else :diaN="diaNp" :diaExtenso="diap" :mesEano="mesEanop" :isToday="isTodaypv" @update:opDetalhes="opExibirBlocoMaior=true; opBlocoMenor = true"></BlocoMaiorRecolhido>
-  <BlocoRetorno v-if="opBlocoRetorno" :Everdadeiro="EverdadeiroApp" :mensagem="MensagemApp" @update:opBlocoRetorno="fecharMensagemRetorno()"></BlocoRetorno>
+  <BlocoRetorno v-if="opBlocoRetorno" :Everdadeiro="EverdadeiroApp" :mensagem="MensagemApp" @update:opBlocoMenorExpandidoo="opBlocoMenorExpandido = false" @update:opBlocoRetorno="fecharMensagemRetorno()"></BlocoRetorno>
 
 </template>
 

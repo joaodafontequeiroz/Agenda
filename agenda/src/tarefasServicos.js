@@ -59,13 +59,11 @@ export default{
     try{
       let response = await axios.post("/Controller/Command", tarefaParaAdicionar);
       console.log(response.data.mensagem);
-      return response;
+      return response.data;
     }
     catch(error){
       if(error.response){
-        let response = await axios.post("/Controller/Command", tarefaParaAdicionar);
-        console.log(response.data.mensagem);
-        return response.data;
+        return error.response.data;
       };
     }
   },

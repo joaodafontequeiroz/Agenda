@@ -28,7 +28,7 @@ export default{
         <div class="titulo">{{ diaExtenso }}</div>
         <div class="titulo2">{{mesEano}}</div>
         <div v-if="isToday === true" class="data">Hoje</div>
-        <button @click="$emit('update:opDetalhes', true)" class="expandir">Detalhes</button>
+        <button @click="$emit('update:opDetalhes', true); ('update:')" class="expandir">Detalhes</button>
     </div>
 </template>
 

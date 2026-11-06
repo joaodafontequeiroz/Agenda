@@ -13,333 +13,357 @@ export default {
     Everdadeiro: Boolean,
     mensagem: String,
   },
-  emits: ['update:opBlocoRetorno'],
+  emits: ['update:opBlocoRetorno', 'update:opBlocoMenorExpandidoo'],
 }
 </script>
 
 <template>
 
-  <div v-if="!EverdadeiroLocal" class="">
+  <div v-if="EverdadeiroLocal" class="">
     <img class="" @click="$emit('update:opBlocoRetorno')" src="/fechar.png" alt="icone para fechar a aba">
     <img src="/acerto.jpg" alt="imagem que refere ao resultado esperado">
     <div>Tudo Certo!</div>
     <div>{{mensagemLocal}}</div>
     <div>Voce ja pode continuar</div>
-    <button class="" type="button" @click="$emit('update:opBlocoRetorno')" ></button>
+    <button class="" type="button" @click="$emit('update:opBlocoRetorno'); $emit('update:opBlocoMenorExpandidoo', false)" ></button>
     <div>Tudo salvo. Pode seguir com tranquilidade.</div>
   </div>
 
-  <div v-if="EverdadeiroLocal" class="">
+  <div v-else class="">
     <img class="" @click="$emit('update:opBlocoRetorno')" src="/fechar.png" alt="icone para fechar a aba">
     <img src="/erro.jpg" alt="imagem que refere ao resultado errado">
+    <div>Nao foi possivel salvar</div>
     <div>{{mensagemLocal}}</div>
     <div>Tente novamente em instantes</div>
     <button type="button" @click="$emit('update:opBlocoRetorno')"></button>
   </div>
 </template>
 
+
 <style scoped>
 
-div:has(> img[src="/acerto.jpg"]),
-div:has(> img[src="/erro.jpg"]) {
+/* ===== FUNDO ESCURECIDO E POSICIONAMENTO ===== */
+
+:is(
+  div:has(> img[src="/acerto.jpg"]),
+  div:has(> img[src="/erro.jpg"])
+) {
   position: fixed;
   inset: 0;
-  margin: auto;
-
-  width: 440px;
-  max-width: calc(100vw - 32px);
-  height: 400px;
-  max-height: calc(100dvh - 32px);
-
-  background-color: #ffffff;
-  border-radius: 20px;
-  padding: 32px;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-
+  width: 100vw !important;
+  height: 100dvh;
   z-index: 9999;
-  isolation: isolate;
 
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  display: grid;
+  grid-template-columns: minmax(0, min(440px, calc(100vw - 32px)));
+  grid-template-rows:
+    32px
+    76px
+    20px
+    42px
+    12px
+    46px
+    26px
+    28px
+    48px
+    13px
+    27px
+    30px;
 
-  animation: aparecerModal 0.3s ease-out;
-}
-
-
-/* =====================================
-   FUNDO ESCURECIDO SOBRE A TELA
-   ===================================== */
-
-div:has(> img[src="/acerto.jpg"])::before,
-div:has(> img[src="/erro.jpg"])::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-
-  background-color: rgba(15, 25, 20, 0.45);
-  backdrop-filter: blur(2px);
-
-  z-index: -1;
-}
-
-
-/* =====================================
-   ICONE X PARA FECHAR
-   ===================================== */
-
-div:has(> img[src="/acerto.jpg"]) > img[src="/fechar.png"],
-div:has(> img[src="/erro.jpg"]) > img[src="/fechar.png"] {
-  position: absolute;
-  top: 22px;
-  right: 22px;
-
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-
-  cursor: pointer;
-  opacity: 0.65;
-
-  transition: opacity 0.2s, transform 0.2s;
-}
-
-div:has(> img[src="/acerto.jpg"]) > img[src="/fechar.png"]:hover,
-div:has(> img[src="/erro.jpg"]) > img[src="/fechar.png"]:hover {
-  opacity: 1;
-  transform: scale(1.15);
-}
-
-
-/* =====================================
-   ICONE DE SUCESSO
-   ===================================== */
-
-img[src="/acerto.jpg"] {
-  width: 76px;
-  height: 76px;
-
-  padding: 18px;
-  box-sizing: border-box;
-
-  background-color: #e8f4ed;
-  border-radius: 50%;
-
-  object-fit: contain;
-  mix-blend-mode: multiply;
-
-  margin-bottom: 22px;
-}
-
-
-/* =====================================
-   ICONE DE ERRO
-   ===================================== */
-
-img[src="/erro.jpg"] {
-  width: 76px;
-  height: 76px;
-
-  padding: 18px;
-  box-sizing: border-box;
-
-  background-color: #fceeee;
-  border-radius: 50%;
-
-  object-fit: contain;
-  mix-blend-mode: multiply;
-
-  margin-bottom: 22px;
-}
-
-
-/* =====================================
-   TITULO DE SUCESSO - TUDO CERTO!
-   ===================================== */
-
-div:has(> img[src="/acerto.jpg"]) > div:nth-of-type(1) {
-  font-size: 27px;
-  font-weight: 500;
+  place-content: center;
+  text-align: center;
+  background: rgba(30, 42, 37, 0.45);
+  font-family: inherit;
   color: #202925;
-
-  line-height: 1.3;
-  margin-bottom: 14px;
+  isolation: isolate;
 }
 
+/* ===== JANELA BRANCA CENTRAL ===== */
 
-/* =====================================
-   MENSAGEM RETORNADA DO BACK - SUCESSO
-   ===================================== */
+:is(
+  div:has(> img[src="/acerto.jpg"]),
+  div:has(> img[src="/erro.jpg"])
+)::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-div:has(> img[src="/acerto.jpg"]) > div:nth-of-type(2) {
+  width: min(440px, calc(100vw - 32px));
+  height: 400px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 12px 45px rgba(0, 0, 0, 0.13);
+  z-index: 0;
+}
+
+/* Elementos ficam na frente do fundo branco */
+
+:is(
+  div:has(> img[src="/acerto.jpg"]),
+  div:has(> img[src="/erro.jpg"])
+) > * {
+  position: relative;
+  grid-column: 1;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+/* ===== ÍCONE DE FECHAR ===== */
+
+:is(
+  div:has(> img[src="/acerto.jpg"]),
+  div:has(> img[src="/erro.jpg"])
+) > img:first-of-type {
+  grid-row: 1;
+  justify-self: end;
+  align-self: start;
+
+  width: 18px;
+  height: 18px;
+  margin-top: 24px;
+  margin-right: 24px;
+
+  object-fit: contain;
+  opacity: 0.55;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+:is(
+  div:has(> img[src="/acerto.jpg"]),
+  div:has(> img[src="/erro.jpg"])
+) > img:first-of-type:hover {
+  opacity: 1;
+}
+
+/* ===== ÍCONE CENTRAL DE RESULTADO ===== */
+
+:is(
+  div:has(> img[src="/acerto.jpg"]),
+  div:has(> img[src="/erro.jpg"])
+) > img:nth-of-type(2) {
+  grid-row: 2;
+  justify-self: center;
+  align-self: center;
+
+  width: 76px;
+  height: 76px;
+  padding: 15px;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+/* Fundo verde para sucesso */
+
+div:has(> img[src="/acerto.jpg"]) > img:nth-of-type(2) {
+  background: #e8f4ed;
+}
+
+/* Fundo vermelho para erro */
+
+div:has(> img[src="/erro.jpg"]) > img:nth-of-type(2) {
+  background: #fbefef;
+}
+
+/* ===== TÍTULO PRINCIPAL ===== */
+
+:is(
+  div:has(> img[src="/acerto.jpg"]),
+  div:has(> img[src="/erro.jpg"])
+) > div:nth-of-type(1) {
+  grid-row: 4;
+  align-self: center;
+  justify-self: center;
+
+  padding: 0 15px;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #202925;
+}
+
+/* ===== MENSAGEM VINDO DO BACKEND ===== */
+
+:is(
+  div:has(> img[src="/acerto.jpg"]),
+  div:has(> img[src="/erro.jpg"])
+) > div:nth-of-type(2) {
+  grid-row: 6;
+  align-self: center;
+  justify-self: center;
+
+  width: 100%;
+  max-width: 400px;
+  padding: 0 20px;
   font-size: 16px;
   font-weight: 400;
-  color: #7a8580;
-
-  line-height: 1.5;
-  margin-bottom: 4px;
+  line-height: 1.4;
+  color: #77817c;
+  overflow-wrap: anywhere;
 }
 
+/* ===== SEGUNDA LINHA DA MENSAGEM ===== */
 
-/* =====================================
-   TEXTO - VOCE JA PODE CONTINUAR
-   ===================================== */
+:is(
+  div:has(> img[src="/acerto.jpg"]),
+  div:has(> img[src="/erro.jpg"])
+) > div:nth-of-type(3) {
+  grid-row: 7;
+  align-self: center;
+  justify-self: center;
 
-div:has(> img[src="/acerto.jpg"]) > div:nth-of-type(3) {
+  padding: 0 15px;
   font-size: 16px;
-  color: #7a8580;
-  line-height: 1.5;
+  line-height: 1.4;
+  color: #77817c;
 }
 
+/* ===== BOTÃO PRINCIPAL ===== */
 
-/* =====================================
-   BOTAO VERDE - CONTINUAR
-   ===================================== */
+:is(
+  div:has(> img[src="/acerto.jpg"]),
+  div:has(> img[src="/erro.jpg"])
+) > button {
+  grid-row: 9;
+  justify-self: center;
+  align-self: center;
 
-div:has(> img[src="/acerto.jpg"]) > button {
-  width: 100%;
-  min-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  margin-top: auto;
-  padding: 12px 20px;
+  width: calc(100% - 64px);
+  height: 48px;
 
-  background-color: #247f5e;
   border: none;
   border-radius: 10px;
-
-  color: white;
+  font-family: inherit;
   font-size: 16px;
   font-weight: 600;
-
+  color: #ffffff;
   cursor: pointer;
 
-  transition: background-color 0.2s, transform 0.2s;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
 }
 
-div:has(> img[src="/acerto.jpg"]) > button::after {
-  content: "Continuar";
+:is(
+  div:has(> img[src="/acerto.jpg"]),
+  div:has(> img[src="/erro.jpg"])
+) > button:hover {
+  transform: translateY(-2px);
+}
+
+/* ===== MODAL DE SUCESSO ===== */
+
+div:has(> img[src="/acerto.jpg"]) > button {
+  background: #23805e;
 }
 
 div:has(> img[src="/acerto.jpg"]) > button:hover {
-  background-color: #196b4e;
-  transform: translateY(-2px);
+  background: #196a4d;
 }
 
+/* Texto do botão vazio */
 
-/* =====================================
-   RODAPE DO SUCESSO
-   ===================================== */
+div:has(> img[src="/acerto.jpg"]) > button::before {
+  content: "Continuar";
+}
+
+/* Mensagem abaixo do botão */
 
 div:has(> img[src="/acerto.jpg"]) > div:nth-of-type(4) {
+  grid-row: 11;
+  align-self: center;
+  justify-self: center;
+
+  padding: 0 12px;
   font-size: 14px;
-  color: #7a8580;
-
-  margin-top: 16px;
+  color: #77817c;
 }
 
-
-/* =====================================
-   MENSAGEM DE ERRO
-   ===================================== */
-
-div:has(> img[src="/erro.jpg"]) > div:nth-of-type(1) {
-  font-size: 27px;
-  font-weight: 500;
-  color: #202925;
-
-  line-height: 1.3;
-  margin-bottom: 14px;
-}
-
-
-/* =====================================
-   TEXTO - TENTE NOVAMENTE
-   ===================================== */
-
-div:has(> img[src="/erro.jpg"]) > div:nth-of-type(2) {
-  font-size: 16px;
-  font-weight: 400;
-  color: #7a8580;
-
-  line-height: 1.5;
-}
-
-
-/* =====================================
-   BOTAO ESCURO - TENTAR NOVAMENTE
-   ===================================== */
+/* ===== MODAL DE ERRO ===== */
 
 div:has(> img[src="/erro.jpg"]) > button {
-  width: 100%;
-  min-height: 50px;
-
-  margin-top: auto;
-  padding: 12px 20px;
-
-  background-color: #2e3934;
-  border: none;
-  border-radius: 10px;
-
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition: background-color 0.2s, transform 0.2s;
-}
-
-div:has(> img[src="/erro.jpg"]) > button::after {
-  content: "Tentar novamente";
+  background: #2d3933;
 }
 
 div:has(> img[src="/erro.jpg"]) > button:hover {
-  background-color: #1c2822;
-  transform: translateY(-2px);
+  background: #1d2923;
 }
 
+/* Texto do botão de erro */
 
-/* =====================================
-   ANIMACAO DE ENTRADA
-   ===================================== */
-
-@keyframes aparecerModal {
-  from {
-    opacity: 0;
-    scale: 0.95;
-  }
-
-  to {
-    opacity: 1;
-    scale: 1;
-  }
+div:has(> img[src="/erro.jpg"]) > button::before {
+  content: "↻  Tentar novamente";
 }
 
+/* Texto abaixo do botão de erro */
 
-/* =====================================
-   RESPONSIVIDADE
-   ===================================== */
+div:has(> img[src="/erro.jpg"]) > button::after {
+  content: "Voltar à página";
+  position: absolute;
+  top: calc(100% + 18px);
+  left: 0;
+  width: 100%;
+
+  font-size: 14px;
+  font-weight: 400;
+  color: #77817c;
+  text-align: center;
+}
+
+/* ===== RESPONSIVIDADE ===== */
 
 @media (max-width: 480px) {
-  div:has(> img[src="/acerto.jpg"]),
-  div:has(> img[src="/erro.jpg"]) {
-    width: calc(100vw - 32px);
-    height: 360px;
-    padding: 28px 22px;
-    border-radius: 16px;
-  }
-
-  div:has(> img[src="/acerto.jpg"]) > div:nth-of-type(1),
-  div:has(> img[src="/erro.jpg"]) > div:nth-of-type(1) {
+  :is(
+    div:has(> img[src="/acerto.jpg"]),
+    div:has(> img[src="/erro.jpg"])
+  ) > div:nth-of-type(1) {
     font-size: 23px;
   }
 
-  div:has(> img[src="/acerto.jpg"]) > div:nth-of-type(2),
-  div:has(> img[src="/erro.jpg"]) > div:nth-of-type(2) {
+  :is(
+    div:has(> img[src="/acerto.jpg"]),
+    div:has(> img[src="/erro.jpg"])
+  ) > div:nth-of-type(2),
+  :is(
+    div:has(> img[src="/acerto.jpg"]),
+    div:has(> img[src="/erro.jpg"])
+  ) > div:nth-of-type(3) {
     font-size: 14px;
   }
+
+  :is(
+    div:has(> img[src="/acerto.jpg"]),
+    div:has(> img[src="/erro.jpg"])
+  ) > button {
+    width: calc(100% - 40px);
+  }
 }
+
+@media (max-height: 430px) {
+  :is(
+    div:has(> img[src="/acerto.jpg"]),
+    div:has(> img[src="/erro.jpg"])
+  ) {
+    align-content: start;
+    overflow-y: auto;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  :is(
+    div:has(> img[src="/acerto.jpg"]),
+    div:has(> img[src="/erro.jpg"])
+  )::before {
+    top: 16px;
+    transform: translateX(-50%);
+  }
+}
+
 </style>
+
