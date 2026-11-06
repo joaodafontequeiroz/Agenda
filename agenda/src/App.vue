@@ -112,11 +112,10 @@ export default{
 
   methods:{
 
-      async MensagemRetornoTarefasEnviadas(){
+      async MensagemRetornoTarefasEnviadas(valor){
       this.opBlocoRetorno = true;
-      this.ResponseRetornoTarefasEnviadas = await tarefasServicos.enviandoDadosTasks();
-      this.EverdadeiroApp = this.ResponseRetornoTarefasEnviadas.deuCerto;
-      this.MensagemApp = this.ResponseRetornoTarefasEnviadas.mensagem;
+      this.MensagemApp = valor.mensagem;
+      this.EverdadeiroApp = valor.deuCerto;
     },
 
     fecharMensagemRetorno() {
@@ -179,7 +178,7 @@ export default{
 <template>
   <BlocoMaior v-if="opExibirBlocoMaior" :diaN="diaNp" :dia="diap" :mesEano="mesEanop" :isToday="isTodaypv" :tarefasConcluidas="tarefasconcluidasp" :porcentagem="porcentagemp" :tarefasPendentes="tarefaspendentesp" @update:opAdicionarTarefa="opBlocoMenorExpandido = true" @update:opExibirBlocoMaior="opExibirBlocoMaior=false; opBlocoMenor = false" >
       <BlocoMenor v-show="opBlocoMenor" :listaTarefas="listaTarefas" @update:opCheckBox="atualizar()"></BlocoMenor>
-      <BlocoMenorExpandido v-if="opBlocoMenorExpandido" @mostrar:mensagemRetornoTarefasEnviadas="MensagemRetornoTarefasEnviadas()" @salva:pagina="atualizar()" @cancel:task="opBlocoMenorExpandido=false">  </BlocoMenorExpandido>
+      <BlocoMenorExpandido v-if="opBlocoMenorExpandido" @mostrar:mensagemRetornoTarefasEnviadas="MensagemRetornoTarefasEnviadas" @salva:pagina="atualizar()" @cancel:task="opBlocoMenorExpandido=false">  </BlocoMenorExpandido>
   </BlocoMaior>
   <BlocoMaiorRecolhido v-else :diaN="diaNp" :diaExtenso="diap" :mesEano="mesEanop" :isToday="isTodaypv" @update:opDetalhes="opExibirBlocoMaior=true; opBlocoMenor = true"></BlocoMaiorRecolhido>
   <BlocoRetorno v-if="opBlocoRetorno" :Everdadeiro="EverdadeiroApp" :mensagem="MensagemApp" @update:opBlocoRetorno="fecharMensagemRetorno()"></BlocoRetorno>

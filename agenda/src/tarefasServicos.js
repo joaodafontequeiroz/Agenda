@@ -65,8 +65,8 @@ export default{
       if(error.response){
         let response = await axios.post("/Controller/Command", tarefaParaAdicionar);
         console.log(response.data.mensagem);
+        return response.data;
       };
-
     }
   },
 

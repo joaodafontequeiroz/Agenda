@@ -4,6 +4,8 @@ export default {
 
   data(){
     return{
+      EverdadeiroLocal: this.Everdadeiro,
+      mensagemLocal: this.mensagem,
     }
   },
 
@@ -17,29 +19,26 @@ export default {
 
 <template>
 
-  <div v-if="Everdadeiro" class="">
+  <div v-if="!EverdadeiroLocal" class="">
     <img class="" @click="$emit('update:opBlocoRetorno')" src="/fechar.png" alt="icone para fechar a aba">
     <img src="/acerto.jpg" alt="imagem que refere ao resultado esperado">
     <div>Tudo Certo!</div>
-    <div>{{mensagem}}</div>
+    <div>{{mensagemLocal}}</div>
     <div>Voce ja pode continuar</div>
     <button class="" type="button" @click="$emit('update:opBlocoRetorno')" ></button>
     <div>Tudo salvo. Pode seguir com tranquilidade.</div>
   </div>
 
-  <div v-else class="">
+  <div v-if="EverdadeiroLocal" class="">
     <img class="" @click="$emit('update:opBlocoRetorno')" src="/fechar.png" alt="icone para fechar a aba">
     <img src="/erro.jpg" alt="imagem que refere ao resultado errado">
-    <div>{{mensagem}}</div>
+    <div>{{mensagemLocal}}</div>
     <div>Tente novamente em instantes</div>
     <button type="button" @click="$emit('update:opBlocoRetorno')"></button>
   </div>
 </template>
 
 <style scoped>
-/* =====================================
-   ESTRUTURA PRINCIPAL DOS DOIS MODAIS
-   ===================================== */
 
 div:has(> img[src="/acerto.jpg"]),
 div:has(> img[src="/erro.jpg"]) {

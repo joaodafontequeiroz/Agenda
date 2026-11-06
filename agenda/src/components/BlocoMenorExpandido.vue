@@ -9,6 +9,7 @@ export default{
     corpo: "",
     hora: "",
     classe: "",
+    mensagemErroObterTasksPendentes: "",
    }
   },
 
@@ -23,8 +24,8 @@ export default{
         corpo: this.corpo,
         concluido: false,
       }
-      await tarefasServicos.enviandoDadosTasks(taskPackage);
-      this.$emit('mostrar:mensagemRetornoTarefasEnviadas');
+      this.mensagemErroObterTasksPendentes = await tarefasServicos.enviandoDadosTasks(taskPackage);
+      this.$emit('mostrar:mensagemRetornoTarefasEnviadas', this.mensagemErroObterTasksPendentes);
       this.$emit('salva:pagina');
 
       this.titulo = "";
